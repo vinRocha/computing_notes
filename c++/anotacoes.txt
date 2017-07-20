@@ -1,0 +1,190 @@
+"Computers are like a bicycle for our minds" - Steve Jobs
+
+1. Introduction to objects in C++:
+
+Functions and states can be set to have different types of boundaries, they are:
+
+ - public:
+    The definitions are available to everyone, inside or outside the class.
+
+ - private:
+    No one can access the definitions or functions outside the class, even for
+    inheriting class.
+
+ - protected:
+    Works like private, however inheriting classes have access to protected
+    members.
+--------------------------------------------------------------------------------
+
+SKIPPED ANALYSIS AND DESIGN FROM CHAPTER 1
+--------------------------------------------------------------------------------
+
+2. Making & Using Objects:
+
+Para somente declarar uma variável ou função e poder defini-la posteriormente,
+ou em outro arquivo, deve ser usar a palavra chave 'extern', significando que a
+definição é externa ao arquivo atual, ou ocorre posteriormente no mesmo; 
+exemplo:
+
+    extern int a;
+
+(não faz muito sentido para funções uma vez que em suas declarações, estas não
+são necessariamente definidas)
+--------------------------------------------------------------------------------
+
+'using' keyword tells the compiler to use declarations/definitions from a
+specific namespace; example:
+
+    using namespace std;
+--------------------------------------------------------------------------------
+
+Ao usar declaração de headers sem template, ou seja, indicando a extensão, o
+compilador poderá definir implicitamente o namespace; exemplo:
+
+  quando você declara:
+    #include <iostream.h>
+
+  o compilador lê:
+    #include <iostream>
+    using namespace std;
+--------------------------------------------------------------------------------
+
+<fstream>
+ao utilizar fstream para ler arquivos, o operador >> atuando em um objeto do
+tipo ifstream somente lê uma palavra por vez, e não guarda espaços nem tão pouco
+quebra de linhas; exemplo:
+
+  conteúdo do arquivo:
+  "leia esta linha."
+
+    string s;
+    ifstram in("nome_do_arquivo");
+  
+    in >> s;
+    cout << s
+
+  ira produzir:
+  "leia"
+
+Para ler uma linha inteira, podemos utilizar o método getline(ifstream, string);
+
+getline() não inclui na string a quebra de linha, que deve ser inserida
+manualmente caso necesário.
+--------------------------------------------------------------------------------
+
+3. The C in C++:
+
+Para declarar uma função que não recebe nenhum argumento em C++, basta declarar
+a função sem nenhum argumento entre parenteses; exemplo:
+
+  int exemplo();
+
+O mesmo não é verdade em C, no qual a declaração acima significa que a função
+pode ser definida com quantidades quaisquer de argumentos. Em ambas as
+linguagens a palavra chave 'void' utilizada sozinha na lista de argumentos
+significa que a função não recebe nenhum argumento; exemplo:
+
+  int exemplo_2(void);
+
+Portanto recomenda usar a palavra-chave 'void' quando se quiser declarar uma
+função que não recebe nenhum argumento.
+--------------------------------------------------------------------------------
+
+short and long can be used stand-alone. In this case, the type is implicit
+'int' which means, long = long int, and you probably can cast an long variable
+to an int;
+--------------------------------------------------------------------------------
+
+References:
+
+References (by now...) work pretty much as a pointer does. However, it is used
+in functions arguments and instead of calling the function with a memory address
+argument, the actual variable should be passed. Example:
+
+  void f2(int& a);
+
+  int main(void){
+    int a = 2;
+    f2(a);
+  }
+--------------------------------------------------------------------------------
+
+static:
+
+used to define variables inside functions makes the variable persistent through
+function calls. The value of the variable is initialized in the first function
+call and then retained on the next calls. Example:
+
+  void func(void){
+    static int x = 0;
+    cout << "x = " << x++ << endl;
+  }
+
+every time we call the function above, it will print and increment the value of
+x; Note that in this context, x is not a global variable and so it cannot be
+accessed outside the function it is defined.
+
+when the keyword is used to declares functions/global variables inside a file,
+it means that these functions/variables are not accessible from a outside scope
+(other files).
+
+'static' will come back latter, when we talk more about classes....
+--------------------------------------------------------------------------------
+
+Some of shorthand notations:
+
+When an operator works on two variables and the result is saved in the first
+variable, you can use shorthand notations; for example:
+
+  x += 1 //is equivalent to x = x + 1;
+  y /= z //is equivalent yo y = y / z;
+  ...
+
+However this shorthand notation cannot be used with operators that works on only
+one variable, such as the not (~); for example:
+
+  ~x //negates the bit of x;
+  x = ~x //negates the bit of x and saves it in x;
+  //x ~=; does not makes sense. Invalid shorthand notation;
+--------------------------------------------------------------------------------
+
+Ternary operator:
+
+?: example:
+
+  a = (c || d) ? --k : l += 1;
+
+means that a receives k-1 if c or d are different from 0 or false, or a receives
+l+1 if c and d are equals to 0 or false.
+--------------------------------------------------------------------------------
+
+Side notes:
+  *You can pass a double type to a function that receives integer as an 
+  argument;the compiler will do an automatic type conversion. Maybe the opposite  also works, use this feature carefully.
+
+  *'asm' keyword allows to write assembly code inside a c++ program. The sintax
+  is compiler-dependent.
+--------------------------------------------------------------------------------
+
+Arrays vs Pointers:
+
+Uma array apesar de parecer um ponteiro, não o é, uma vez que o endereço de
+memória para onde ela aponta não pode ser incrementado ou alterado de qualquer
+forma. Para alterar os valores de suas variáveis, somente a notação com [k] é
+valida. O ponteiro por sua vez pode ter seus valores alterados ou incremetados,
+e também funciona com a notação [k], onde [0] refere-se ao seu endereço inicial.
+--------------------------------------------------------------------------------
+
+C++ explicity cast:
+
+You can cast variables to another type using variables using different kinds of
+casting 'operators'. They are, static_cast (for reasonably "well-behaved" cast;
+long to int for example), const_cast (to cast away const or volatile),
+reinterpret_cast (most dangerous type of casting, can cast any variable type to
+any other type of interest) and dynamic_cast (for type-safe downcasting);
+example:
+
+  int i  = 25;
+  double d = static_cast<double> i;
+--------------------------------------------------------------------------------
+

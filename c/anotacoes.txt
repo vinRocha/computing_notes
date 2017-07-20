@@ -1,0 +1,27 @@
+Em C, uma função declarada (não definida) sem argumentos, por exemplo
+
+  int funcao();
+
+significa uma função com número e tipos quaisquer de argumento.
+--------------------------------------------------------------------------------
+
+Quando declaramos um ponteiro como constante, o endereço de memória para onde o
+ponteiro aponta pode ser alterado, mas não o valor do enderaço para o qual ele
+aponta. Ou seja, quando um ponteiro é declarado como constante, ele é um
+ponteiro read-only protegido por código; exemplo:
+
+  void sp_to_dash(const char *s){
+    while(*s){
+      if (*s==' ') printf("%c", '-');
+      else printf("%c", *s);
+      ++s; //incrementamos o endereço de memoria em s pelo tamanho de um char
+           //apesar deste ser declarado como const;
+    }
+  }
+--------------------------------------------------------------------------------
+
+Quando insere-se alguma biblioteca ou header, no inicio do programa, é como se o
+código contido na biblioteca fosse copiado (hard-coded) previamente em seu
+programa, no ponto aonde o mesmo é inserido;
+
+
