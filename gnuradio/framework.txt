@@ -1,0 +1,130 @@
+NOTES ABOUT GNU RADIO FRAMEWORK.
+
+Gnuradio works with flow graphs, as in graphs theory, through which data flows.
+(http://gnuradio.org/redmine/projects/gnuradio/wiki/TutorialsCoreConcepts) 
+--------------------------------------------------------------------------------
+
+A “Stream to Vector” blocks, work as a decimator. You have to think in terms of 
+items. So, let’s say you have an audio source block producing samples at a rate 
+of 32kHz. You can say it produces 32k samples, or better 32k items at one 
+second. Now, if you pass this data to a “Stream to Vector” block of length 1024, 
+it will produces one vector item, containing 1024 gathered samples at a rate 
+1024 smaller than the source. So from a item point of view, the one which you 
+should use, it works as a decimator.
+--------------------------------------------------------------------------------
+
+PMTs - Polymorphic Types:
+
+Polymorphic Types are variable to store different kinds of data although they 
+are seem to the program as the same type variable. In Python, PMTs is seen as 
+kind of a instance of a pmt class. The basic manipulations are:
+
+  pmt.from_<type>; ex.: 
+    x = pmt.from_long(<long>)
+  pmt.to_<type>; ex.:
+    x = pmt.to_complex(<pmt>)
+  pmt.intern(<srt>); ex.:
+    x = pmt.intern(“string”)
+  pmt.symbol_to_string(<pmt>); ex.:
+    str1 = pmt.symbol_to_string(<pmt>)
+
+Simpler than above methods are the following:
+
+    pmt.to_python(<pmt>); ex.:
+        x = pmt.to_python(<pmt>)
+    pmt.to_pmt(<var>); ex.:
+        x = pmt.to_pmt(<double_complex>)
+--------------------------------------------------------------------------------
+
+Working with Python:
+
+gr is the main GNU Radio library.
+
+To compose a flow graph, you need to create a class, derived from the main class 
+“gr.top_block”; for instance:
+    
+from gnuradio import gr
+from gnuradio import audio, analog, filter
+
+class key_note(gr.top_block):
+  def __init__(self, frequency, ampl):
+    gr.top_block.__init__(self)
+        
+    sample_rate = 4800
+    snk0 = audio.sink(sample_rate*10, “”)
+    src0 = analog.sig_source_f(sample_rate, analog.GR_SIN_WAVE, 
+                                frequency, ampl)
+    dec10 = filter.rational_resampler_fff(interpolation=10, decimation=1, 
+                                          taps=None, fractional_bw=None)
+        
+    self.connect((src0, 0), (dec10, 0), (snk0, 0))
+    self.status = 0
+
+With the right imported libraries, the above code creates a flow graph that can 
+be instantiated and initialized as shown below:
+    
+  app = key_note(440, 0.5)
+  app.start()
+
+The above commands will run the flow graph defined inside the class key_note.
+
+There is also another class helpful in order to create flow graphs, the derive 
+from gr.hier_block2 main class. For further details on how to work with this 
+class, please refer to:
+
+http://gnuradio.org/redmine/projects/gnuradio/wiki/TutorialsWritePythonApplications#Hierarchical-blocks
+--------------------------------------------------------------------------------
+
+CMake:
+
+Command to configure new blocks in the desired location:
+
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr
+--------------------------------------------------------------------------------
+
+Performance:
+
+In order to allow non root users to set real-time priority in GNURadio, edit 
+/etc/security/limits.conf, and add this the following line:
+
+    @usrp  - rtprio 50
+--------------------------------------------------------------------------------
+
+Random Ideias:
+For my project I can use vector sink block instead of vector probe to get the 
+data from the blocks.
+
+I can also create a sync or a sink block, in Python, that does the processing 
+required by my application.
+
+Utilizar dados complexos e do tipo bytes é só uma maneira de se implementar o 
+modulador e o demodulador. É claro que a USRP necessita de, e gera outputs do 
+tipo complexo. Porem qualquer outro tipo de dados poderia ser utilizado para 
+carregar a informação demodulada.
+
+
+Packet Communication:
+
+When working with gnuradio and the SDR hardwares, you have to implement every
+layer of the communication scheme. In other words, there is no PHY Layer already
+implemented in gnuradio and thus, framing, synchronization and frame detection 
+should be also part of code for the application being developed.
+
+Para efetuar transmissão de textos, ASCII encoded por exemplo, ver:
+    https://en.wikipedia.org/wiki/Text_file
+    https://en.wikipedia.org/wiki/ASCII
+
+precisamos identificar no receptor não somente os bits transmitidos, mas também 
+o bit inicial da sequência transmitida, somente assim podemos recuperar uma 
+cópia fiel de uma informação transmitida.
+
+No GNURadio, a maioria dos blocos (inclusive moduladores e demoduladores) 
+trabalham com base em um fluxo de dados (stream) não se importando com o 
+posicionamento dos mesmos (framing). O que trás a necessidade de utilizarmos 
+blocos ”empacotadores” para realizar o gerenciamento dos framings, estes blocos 
+detectam o início de um pacote e passam para o bloco a seguir, um stream de 
+informação na qual o primeiro bit a ser encaminhado coincide com o primeiro da 
+informação que foi transmitida.
+--------------------------------------------------------------------------------
+
+
