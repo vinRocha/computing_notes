@@ -1,0 +1,32 @@
+GNURadio Blocks’ Working Principles
+
+
+Packed to Unpacked:
+
+Takes an input stream of ints (32bits per item) or shorts (16bits per item) or
+bytes (8bits per item) and transforms it in an output stream of the same type,
+but with less bits per item, specified in the field “Bits per Chunk”. You can
+also set the endianness of the output items (default is MSB). As an example, if
+you connect a stream of bits in this block, and set “Bits per Chunk = 1”, the
+output will be a stream of bytes with ether 0 or 1. The endianness is related to
+the input stream and not the output. For instance, in the above case regardless
+the input values, the outputs will either be 0x00 0x01;
+
+This block increases the rate of output items (samp_rate).
+
+
+Unpacked to Packed:
+
+This block does the opposite of the block above. It takes a unpacked stream of X
+“Bits per Chunk”, reads and groups these bits according to the endianness
+(default: MSB) and produces a new stream of packed bits.
+
+This block reduces the rate of output items (samp_rate).
+
+
+QT GUI Time Sink:
+
+It handles the samples based in the input stream. It doesn’t care about the
+sample rate. It actually uses the parameters “Sample Rate” and “Number of
+Points” to calculate the scale of the output graph. Tmax = “Number of Points”/
+“Sample Rate”. Each point represents one sample of the input stream.
