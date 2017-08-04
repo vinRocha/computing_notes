@@ -41,7 +41,20 @@ de duas dimensões:
   *((int*)a+26) = 10; //26=3*7+5;
 --------------------------------------------------------------------------------
 
+char *p = "hello world"; //is a valid statement and can be used! This works
+because the way compiler handle strings. It creates a table that stores all the
+strings and p receives the address of "hello world" inside this table.
+--------------------------------------------------------------------------------
 
+malloc() returns as null pointer, but in C, when it is assigned to another type
+pointer, automatic cast is performed; example:
+
+  char *name;
+  name = malloc(1000); //allocates to name an space of 1000bytes or 1000chars;
+
+This is not true in C++, thus to count for portability, explicit cast is usually
+used
+--------------------------------------------------------------------------------
 
 Dicas em C:
 
