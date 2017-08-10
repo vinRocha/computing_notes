@@ -56,6 +56,39 @@ This is not true in C++, thus to count for portability, explicit cast is usually
 used
 --------------------------------------------------------------------------------
 
+Structs:
+
+You can define a struct (similar to a object with only parameters) using the
+struct keyword; example:
+
+  struct Alarm{
+    char name[22];
+    unsigned char hour;
+    unsigned char minute;
+    unsigned char second;
+    struct alarm *ptr_nxt;
+  }my_alarm = {"wake_up", 6, 30, 0, 0};  
+
+To declare a pointer to the object "my_alarm", you can use * and & as usual:
+
+  struct Alarm *my_ptr = &my_alarm;
+
+To access variables and their memory addresses:
+
+  my_alarm.hour = 7;
+  my_ptr->minute = 0;
+  
+  printf("%s\n", my_alarm.name);
+  printf("address of my_alarm.minute: %p\n", &my_alarm.minute);
+  printf("address of my_alarm.second: %p\n", &my_ptr->second);
+
+As we can se, the dot and arrow operators have precedence over '&'.
+The dot operator used with a pointer to a struct is not allowed by the compiler;
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
 Dicas em C:
 
 - Em C, uma função declarada - não definida - sem argumentos, por exemplo
@@ -68,4 +101,21 @@ significa uma função com número e tipos quaisquer de argumentos.
 - Quando insere-se alguma biblioteca ou header, no inicio do programa, é como se
 o código contido na biblioteca fosse copiado (hard-coded) previamente em seu
 programa, no ponto aonde o mesmo é inserido;
+--------------------------------------------------------------------------------
+
+ - Using a for loop to read a string, char by char:
+
+  #include <stdio.h>
+  int main(void){
+    char a[50];
+    int i;
+  
+    for(i = 0; i < 49 && (a[i] = getchar()) != '\n'; i++){
+      ;
+    }
+    a[i] = 0;
+
+    puts(a);
+    return 0;
+  }
 --------------------------------------------------------------------------------
