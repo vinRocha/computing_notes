@@ -86,8 +86,70 @@ As we can se, the dot and arrow operators have precedence over '&'.
 The dot operator used with a pointer to a struct is not allowed by the compiler;
 --------------------------------------------------------------------------------
 
+Console IO:
 
+
+FILE IO:
 --------------------------------------------------------------------------------
+
+Preprocessor macros:
+
+All the preprocessor macros start with a # sign. Each preprocessing directve
+must be defined on its own line.
+
+In the #define preprocessor macro, the statement is terminated only by a new
+line. To continue an statement in another one can place a backslash at the
+end of the first line; example:
+
+#define SOME_TAG "replace SOME_TAG \
+with this."
+
+Testar:
+
+#define SOME_TAG "replace SOME_TAG"\
+" with this."
+
+The '#undef' directve removes a previously defined macro. It is used primary to
+allow macro names to be localized only within the piece of code that needs
+them.
+-------------------------------------------------------------------------------
+
+C99
+
+'restrict':
+Verificar na declaração da função memcpy no header string.h o uso do qualifier
+'restrict'; Verificar o que acontece quando se tenta copiar duas regioes da
+memoria com overlapping;
+
+'inline':
+The 'inline' keyword is used with functions and tells the compiler to try to
+optmize function calls; Typically it means that the function's code will be
+expanded in line, rather than called. However, inline is only a request to the
+compiler and it can be ignored. 'inline' is also compatible with C++.
+
+_Bool data type:
+It stores the values 1 and 0; It is an integer type and it is not compatible
+with C++, with defines a 'bool' data type instead. However, C99 adds the header
+<stdbool.h> which defines the macros bool, true, and false, making easy to
+port code between C and C++.
+
+_Complex and _Imaginary:
+C99 implements the complex numbers' arithmetic; The <complex.h> header define
+the 'complex' and 'imaginary' macros. The following data types are defined:
+
+float/double/long double complex/imaginary
+
+long long int/unsigned long long int:
+Defines a integer of at least 8 bytes CHECK THAT!
+
+Array Enhancements:
+C99 has added two important features to arrays, variable length and the ability
+to include type qualifiers in their declarations.
+
+C99 also allows the variables to be declared at any part before its first
+usage.
+--------------------------------------------------------------------------------
+
 
 Dicas em C:
 
