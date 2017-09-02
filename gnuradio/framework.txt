@@ -127,4 +127,12 @@ informação na qual o primeiro bit a ser encaminhado coincide com o primeiro da
 informação que foi transmitida.
 --------------------------------------------------------------------------------
 
+sptr:
+
+typedef boost::shared_ptr<my_class> sptr;
+
+As we see, in the GNU Radio framework, sptr stands for shared_ptr and it is
+defined as a shared pointer class from the boost c++ libraries.
+
+
 
