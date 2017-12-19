@@ -88,8 +88,17 @@ The dot operator used with a pointer to a struct is not allowed by the compiler;
 
 Console IO:
 
+EOF macro is defined in the <stdio.h> and usually is equals to -1;
+the putchar() returns the charecter written or EOF if an error occurs;
+gets() function is dangerous and should not me used. Use fgets() instead;
 
-FILE IO:
+Formated Console IO:
+
+
+
+
+File IO:
+
 --------------------------------------------------------------------------------
 
 Preprocessor macros:
