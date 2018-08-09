@@ -23,7 +23,7 @@ SKIPPED ANALYSIS AND DESIGN FROM CHAPTER 1
 
 Para somente declarar uma variável ou função e poder defini-la posteriormente,
 ou em outro arquivo, deve ser usar a palavra chave 'extern', significando que a
-definição é externa ao arquivo atual, ou ocorre posteriormente no mesmo; 
+definição é externa ao arquivo atual, ou ocorre posteriormente no mesmo;
 exemplo:
 
     extern int a;
@@ -58,10 +58,10 @@ quebra de linhas; exemplo:
   "leia esta linha."
 
     string s;
-    ifstram in("nome_do_arquivo");
-  
+    ifstream in("nome_do_arquivo");
+
     in >> s;
-    cout << s
+    cout << s;
 
   ira produzir:
   "leia"
@@ -86,7 +86,7 @@ significa que a função não recebe nenhum argumento; exemplo:
 
   int exemplo_2(void);
 
-Portanto recomenda usar a palavra-chave 'void' quando se quiser declarar uma
+Portanto recomenda-se usar a palavra-chave 'void' quando se quiser declarar uma
 função que não recebe nenhum argumento.
 --------------------------------------------------------------------------------
 
@@ -159,10 +159,11 @@ l+1 if c and d are equals to 0 or false.
 --------------------------------------------------------------------------------
 
 Side notes:
-  *You can pass a double type to a function that receives integer as an 
-  argument;the compiler will do an automatic type conversion. Maybe the opposite  also works, use this feature carefully.
+  *You can pass a double type to a function that receives integer as an
+  argument; the compiler will do an automatic type conversion. Maybe the
+	opposite also works, use this feature carefully.
 
-  *'asm' keyword allows to write assembly code inside a c++ program. The sintax
+  *'asm' keyword allows to write assembly code inside a c++ program. The syntax
   is compiler-dependent.
 --------------------------------------------------------------------------------
 
@@ -175,10 +176,10 @@ valida. O ponteiro por sua vez pode ter seus valores alterados ou incremetados,
 e também funciona com a notação [k], onde [0] refere-se ao seu endereço inicial.
 --------------------------------------------------------------------------------
 
-C++ explicity cast:
+C++ explicit cast:
 
-You can cast variables to another type using variables using different kinds of
-casting 'operators'. They are, static_cast (for reasonably "well-behaved" cast;
+You can cast variables to another type using different kinds of casting
+'operators'. They are, static_cast (for reasonably "well-behaved" cast,
 long to int for example), const_cast (to cast away const or volatile),
 reinterpret_cast (most dangerous type of casting, can cast any variable type to
 any other type of interest) and dynamic_cast (for type-safe downcasting);
@@ -188,3 +189,62 @@ example:
   double d = static_cast<double> i;
 --------------------------------------------------------------------------------
 
+3. Data Abstraction:
+
+The 'new' keyword in C++ serves to allocate a memory from the heap, for example:
+
+	int *i;
+	i = new int;
+	char *p = new char[300];
+
+The new-expression returns a pointer to a object of the exact type it is asked
+for.
+--------------------------------------------------------------------------------
+
+The compliment of 'new' is the 'delete' keyword. It is used to unallocate the
+memory that is created with new. If the allocated memory is an array, then '[]'
+should be used to indicate that to the compiler. Usage example:
+
+ 	delete i;
+	delete []p;
+--------------------------------------------------------------------------------
+
+string objects in C++ has a method .c_str() that returns a pointer to a C string
+representation of the object... Awesome!!
+--------------------------------------------------------------------------------
+
+in C++, functions can be member of structures... example:
+
+	struct office {
+		int tables;
+		int chairs;
+		string department;
+		add_table(int);
+		get_table();
+		remove_table(int);
+		add_chair(int);
+		get_chair();
+		remove_chair(int);
+		change_department(string);
+		get_department();
+	}
+
+This is totally weird..... Program with objects before learning C is totally
+nuts!!
+--------------------------------------------------------------------------------
+
+The keyword 'this' within a member function (method) returns the pointer to the
+structure which the function operates on. Example:
+
+	int office::get_chair() {
+		return this->chairs;
+	}
+
+	is equivalent to
+
+	int office::get_chair() {
+		return chairs;
+	}
+
+nuts....
+--------------------------------------------------------------------------------
