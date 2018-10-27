@@ -189,7 +189,7 @@ example:
   double d = static_cast<double> i;
 --------------------------------------------------------------------------------
 
-3. Data Abstraction:
+4. Data Abstraction:
 
 The 'new' keyword in C++ serves to allocate a memory from the heap, for example:
 
@@ -248,3 +248,59 @@ structure which the function operates on. Example:
 
 nuts....
 --------------------------------------------------------------------------------
+
+Global scope resolution:
+
+In order to refer to global variable that was hidden by a local variable of the
+same name, one can use the scope resolution operator with nothing in front of
+it. For example:
+
+#include <iostream>
+
+int a;
+void f() {
+	std::cout << "inside global function" << std::endl;
+}
+
+struct S {
+	int a;
+	void f();
+};
+
+void S::f() {
+	::f(); //Would be recursive otherwise for ever
+	::a++; //Select the global 'a'
+	a--;	 //Select the 'a' within the structure
+	std::cout << "Value of global a: " << ::a << std::endl;
+	std::cout << "Value of local a: " << a << std::endl;
+}
+
+int main() { S s; a = 1; s.a=2; s.f(); } //preciso testar isso;
+--------------------------------------------------------------------------------
+
+5. Hiding the Implementation:
+
+The inner structure can access private members of the outer structure, but the
+opposite is false, unless we declare the outer structure as friend of the inner
+one.
+--------------------------------------------------------------------------------
+
+Structure vs Classes:
+
+C++ adopted the use of the keyword 'class' from Simula-67, because it seemed
+natural when designing in a object-oriented perspective. However, the keyword
+'struct' in C++ already defines a class. So the meaning of 'struct' and 'class'
+are identical in absolutely every way, with the exception of one:
+'class' defaults to private, while 'struct' defaults to public.
+--------------------------------------------------------------------------------
+
+To see some techniques of implementation hiding, review end of chapter 5.
+--------------------------------------------------------------------------------
+
+6. Initialization and Cleanup:
+
+When objects are created with the 'new' keyword, the constructor is automatically
+called. If any arguments are required, this should be passed just after the
+type declaration. Example:
+
+Link * head = new Link(data, base)
